@@ -58,15 +58,8 @@ params {
     umi_length: Integer = -1
     umi_start: Integer = 0
 
-    // trimming options
-    trim_fastq: Boolean = true
+    // fastp options
     adapter_fasta: String? = null
-    clip_r1: Integer = 0
-    clip_r2: Integer = 0
-    three_prime_clip_r1: Integer = 0
-    three_prime_clip_r2: Integer = 0
-    trim_nextseq: Boolean = false
-    save_trimmed: Boolean = false
 
     // --------------------------
     // sequence assembly options
