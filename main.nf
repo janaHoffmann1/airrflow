@@ -144,7 +144,6 @@ params {
     // -----------------------
     translate: Boolean = false
     embeddings: String? = null
-    embedding_chain: String = 'H'
     use_gpu: Boolean = false
 
     // -----------------------
