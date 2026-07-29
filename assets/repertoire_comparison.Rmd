@@ -92,7 +92,7 @@ tryCatch( {
                   scale_y_continuous(trans=scales::pseudo_log_trans(base=10), breaks=(10^seq(y_range[1],y_range[2], length.out=max(3,y_range[2]-y_range[1]+1)))) +
                   xlab("") + ylab("Sequence count") +
                   ggtitle("Number of sequences after each of the sequence assembly steps") +
-                  theme(axis.text.x= element_text(angle = 45)) + 
+                  theme(axis.text.x= element_text(angle = 45)) +
                   coord_cartesian(ylim=c(10^(y_range[1]),10^y_range[2]))
 
     p <- ggplotly(seqs_plot)
