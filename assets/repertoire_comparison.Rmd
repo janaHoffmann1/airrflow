@@ -243,6 +243,35 @@ ggsave(filename = paste0(vfamily_dir, "/V_gene_distribution_by_sequence_patient.
 write.table(family, file = paste0(vfamily_dir, "/V_gene_distribution_by_sequence_data.tsv"), sep = "\t", quote = F, row.names = F)
 ```
 
+
+# Seqeuencing depth
+Reads per UMI plotted for each of the samples.
+```{r reads_per_UMI_plot, echo=FALSE, warning=FALSE, results='asis'}
+tryCatch( {
+    tab_seq  <- read.table("reads_per_UMI.csv", header=TRUE, sep=",")
+    tab_seq[is.na(tab_seq)] <- 0
+    plot_table <- tidyr::pivot_longer(tab_seq,
+                                      cols=-X,
+                                      names_to = "sample_id",
+                                      values_to ="value")
+
+
+    UMI_plot <- ggplot(data=plot_table,
+                        aes(x=X, y=value, group=sample_id)) +
+                  geom_line(aes(colour=sample_id)) +
+                  geom_point(aes(colour=sample_id)) +
+                  xlab('Reads per UMI') + ylab('UMI count') +
+                  scale_x_reverse()
+
+    p <- ggplotly(UMI_plot)
+  p
+
+
+  },
+  error=function(e){message("No reads per UMI information available.")}
+)
+```
+
 # Citations
 
 If you use nf-core/airrflow for your analysis, please cite our paper:

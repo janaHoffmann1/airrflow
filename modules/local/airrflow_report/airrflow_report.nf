@@ -12,6 +12,7 @@ process AIRRFLOW_REPORT {
     path(repertoire_report)
     path(css)
     path(logo)
+    path("reads_per_UMI.csv")
 
     output:
     tuple val("${task.process}"), val('alakazam'), eval("Rscript -e \"library(alakazam); cat(as.character(packageVersion('alakazam')))\""), emit: versions_alakazam, topic: versions

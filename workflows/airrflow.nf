@@ -180,6 +180,7 @@ workflow AIRRFLOW {
                 ch_presto_assemblepairs_logs            = channel.empty()
                 ch_presto_collapseseq_logs              = channel.empty()
                 ch_presto_splitseq_logs                 = channel.empty()
+                ch_presto_UMIreads                      = channel.empty()
                 ch_fastp_html                           = channel.empty()
                 ch_fastp_json                           = channel.empty()
                 ch_fastqc_postassembly_mqc              = channel.empty()
@@ -219,6 +220,7 @@ workflow AIRRFLOW {
                 ch_presto_assemblepairs_logs            = channel.empty()
                 ch_presto_collapseseq_logs              = channel.empty()
                 ch_presto_splitseq_logs                 = channel.empty()
+                ch_presto_UMIreads                      = channel.empty()
                 ch_fastp_html                           = RNASEQ_INPUT.out.fastp_reads_html
                 ch_fastp_json                           = RNASEQ_INPUT.out.fastp_reads_json
                 ch_fastqc_postassembly_mqc              = channel.empty()
@@ -282,6 +284,7 @@ workflow AIRRFLOW {
                 ch_presto_assemblepairs_logs            = SEQUENCE_ASSEMBLY.out.presto_assemblepairs_logs.ifEmpty([])
                 ch_presto_collapseseq_logs              = SEQUENCE_ASSEMBLY.out.presto_collapseseq_logs.ifEmpty([])
                 ch_presto_splitseq_logs                 = SEQUENCE_ASSEMBLY.out.presto_splitseq_logs.ifEmpty([])
+                ch_presto_UMIreads                      = SEQUENCE_ASSEMBLY.out.presto_UMIreads.ifEmpty([])
                 ch_tsv_files                            = channel.empty()
             }
 
@@ -320,6 +323,7 @@ workflow AIRRFLOW {
             ch_presto_assemblepairs_logs         = channel.empty()
             ch_presto_collapseseq_logs           = channel.empty()
             ch_presto_splitseq_logs              = channel.empty()
+            ch_presto_UMIreads                   = channel.empty()
             ch_fastp_html                        = channel.empty()
             ch_fastp_json                        = channel.empty()
             ch_fastqc_postassembly_mqc           = channel.empty()
@@ -435,6 +439,7 @@ workflow AIRRFLOW {
                 ch_presto_assemblepairs_logs.collect().ifEmpty([]),
                 ch_presto_collapseseq_logs.collect().ifEmpty([]),
                 ch_presto_splitseq_logs.collect().ifEmpty([]),
+                ch_presto_UMIreads.collect().ifEmpty([]),
                 ch_input_check_logs.collect().ifEmpty([]),
                 ch_reassign_logs.collect().ifEmpty([]),
                 VDJ_ANNOTATION.out.changeo_makedb_logs.collect().ifEmpty([]),

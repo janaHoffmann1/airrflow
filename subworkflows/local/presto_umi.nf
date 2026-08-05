@@ -461,6 +461,7 @@ workflow PRESTO_UMI {
             cluster_sets
         )
         ch_postconsensus = PRESTO_BUILDCONSENSUS_ALIGN_RACE.out.reads
+        ch_readumi = PRESTO_BUILDCONSENSUS_UMI.out.log_tab
         ch_buildconsensus_logs = PRESTO_BUILDCONSENSUS_ALIGN_RACE.out.logs
     } else if (maskprimers_extract) {
         // Do not consider primers when building consensus
@@ -487,6 +488,7 @@ workflow PRESTO_UMI {
             cluster_sets
         )
         ch_postconsensus = PRESTO_BUILDCONSENSUS_UMI.out.reads
+        ch_readumi = PRESTO_BUILDCONSENSUS_UMI.out.log_tab
         ch_buildconsensus_logs = PRESTO_BUILDCONSENSUS_UMI.out.logs
     }
 
@@ -509,6 +511,7 @@ workflow PRESTO_UMI {
             PRESTO_POSTCONSENSUS_PAIRSEQ_UMI.out.reads
         )
         ch_assemblepairs_reads = PRESTO_ASSEMBLEPAIRS_UMI.out.reads
+        ch_readumi = PRESTO_BUILDCONSENSUS_UMI.out.log_tab
         ch_assemblepairs_logs = PRESTO_ASSEMBLEPAIRS_UMI.out.logs
     }
 
@@ -612,4 +615,5 @@ workflow PRESTO_UMI {
     presto_assemblepairs_logs = ch_assemblepairs_logs.collect()
     presto_collapseseq_logs = ch_collapse_logs.collect()
     presto_splitseq_logs = PRESTO_SPLITSEQ_UMI.out.logs.collect()
+    presto_UMIreads = ch_readumi.collect()
 }
