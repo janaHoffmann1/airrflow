@@ -16,6 +16,7 @@ workflow REPERTOIRE_ANALYSIS_REPORTING {
     ch_presto_collapseseq_logs
     ch_presto_splitseq_logs
     ch_presto_UMIreads
+    ch_fasta
     ch_input_check_logs
     ch_reassign_logs
     ch_changeo_makedb_logs
@@ -32,6 +33,7 @@ workflow REPERTOIRE_ANALYSIS_REPORTING {
     library_generation_method
     umi_length
     cluster_sets
+    trust4_umi_read
 
     main:
 
@@ -68,9 +70,18 @@ workflow REPERTOIRE_ANALYSIS_REPORTING {
                         .collectFile(name: 'all_logs_tabs.txt', newLine: true)
 
     // if UMI protocol
-    if (library_generation_method == 'specific_pcr_umi') {
+    if ((library_generation_method == 'specific_pcr_umi') || (library_generation_method == 'dt_5p_race_umi')) {
         GET_READS_PER_UMI(
-            ch_presto_UMIreads
+            ch_presto_UMIreads,
+            [],
+            library_generation_method
+        )
+        ch_reads_umi = GET_READS_PER_UMI.out.readUMI.collect()
+    } else if ((library_generation_method == 'trust4')&&(trust4_umi_read ? trust4_umi_read : [])) {
+        GET_READS_PER_UMI(
+            [],
+            ch_fasta,
+            library_generation_method
         )
         ch_reads_umi = GET_READS_PER_UMI.out.readUMI.collect()
     } else {

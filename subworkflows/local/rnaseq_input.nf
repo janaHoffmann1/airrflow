@@ -139,6 +139,7 @@ workflow RNASEQ_INPUT {
     airr = ch_trust4_airr
     // trust4 output converted to FASTA format
     fasta = ch_fasta
+    fasta_barcode_umi = TRUST4.out.fasta_barcode_umi
     samplesheet = FASTQ_INPUT_CHECK.out.samplesheet
     versions = ch_versions
 
