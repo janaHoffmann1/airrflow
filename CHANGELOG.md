@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 5.1.1 dev [Unreleased]
+
+### `Fixed`
+- [#489](https://github.com/nf-core/airrflow/pull/489) Fixed number of sequences plots to display zero values correctly.
+
 ## 5.1.0 - Ventus
 
 ### `Added`
@@ -16,7 +21,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [#411](https://github.com/nf-core/airrflow/pull/411) Fixed a bug in Enchantr dowser_lineage project.
 - [#453](https://github.com/nf-core/airrflow/pull/453) Fix publishDir collisions in `PRESTO_PARSE_CLUSTER` and `PRESTO_PAIRSEQ_CLUSTERSETS`.
 - [#469](https://github.com/nf-core/airrflow/pull/469) Fixed bug with param `--skip_report`.
-- [#489](https://github.com/nf-core/airrflow/pull/489) Fixed number of sequences plots to display zero values correctly.
 
 ### `Dependencies`
 
