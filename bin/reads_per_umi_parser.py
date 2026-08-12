@@ -30,8 +30,7 @@ if args.rnaseq:
     for i, file in enumerate(glob.glob("*.csv")):
         sample_df = pd.read_csv(file, header=None, index_col=[1]).rename(columns={0:f"{file.split('.csv')[0]}"})
         sample_dfs.append(sample_df)
-
-    pd.concat(sample_dfs, axis=1).to_csv("reads_per_UMI.csv", index=True, index_label="")
+    reads_per_umi_df = pd.concat(sample_dfs, axis=1)
 
 if args.airrseq:
     sample_counts = []
@@ -39,4 +38,8 @@ if args.airrseq:
         df = pd.read_csv(file, sep='\t')
         sample_counts.append(df['SEQCOUNT'].value_counts().rename(file.split('/')[-1].split('_R1_table.tab')[0]))
     reads_per_umi_df = pd.concat(sample_counts, axis=1)
-    reads_per_umi_df.to_csv('reads_per_UMI.csv')
+
+
+reads_per_umi_df = reads_per_umi_df.reindex([i for i in range(reads_per_umi_df.index.min(),reads_per_umi_df.index.max()+1)])
+reads_per_umi_df = reads_per_umi_df.fillna(0)
+reads_per_umi_df.to_csv("reads_per_UMI.csv", index=True, index_label="")
