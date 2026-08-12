@@ -23,7 +23,6 @@ process TRUST4 {
     tuple val(meta), path("${meta.id}_airr.tsv")    , emit: airr_tsv
     tuple val(meta), path("*_report.tsv")           , emit: report_tsv
     tuple val(meta), path("*.fa")                   , emit: fasta
-    tuple val(meta), path("*_assembled_reads.fa")   , emit: fasta_barcode_umi
     tuple val(meta), path("*.out")                  , emit: out
     tuple val(meta), path("*.fq")                   , emit: fq
     tuple val(meta), path("**")                     , emit: outs
