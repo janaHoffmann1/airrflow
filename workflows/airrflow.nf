@@ -326,6 +326,7 @@ workflow AIRRFLOW {
             ch_presto_collapseseq_logs           = channel.empty()
             ch_presto_splitseq_logs              = channel.empty()
             ch_presto_UMIreads                   = channel.empty()
+            ch_fasta_barcode_umi                 = channel.empty()
             ch_fastp_html                        = channel.empty()
             ch_fastp_json                        = channel.empty()
             ch_fastqc_postassembly_mqc           = channel.empty()
