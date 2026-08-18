@@ -461,7 +461,7 @@ workflow PRESTO_UMI {
             cluster_sets
         )
         ch_postconsensus = PRESTO_BUILDCONSENSUS_ALIGN_RACE.out.reads
-        ch_readumi = PRESTO_BUILDCONSENSUS_UMI.out.log_tab
+        ch_readumi = PRESTO_BUILDCONSENSUS_ALIGN_RACE.out.log_tab
         ch_buildconsensus_logs = PRESTO_BUILDCONSENSUS_ALIGN_RACE.out.logs
     } else if (maskprimers_extract) {
         // Do not consider primers when building consensus
@@ -475,6 +475,7 @@ workflow PRESTO_UMI {
             cluster_sets
         )
         ch_postconsensus = PRESTO_BUILDCONSENSUS_EXTRACT.out.reads
+        ch_readumi = PRESTO_BUILDCONSENSUS_EXTRACT.out.log_tab
         ch_buildconsensus_logs = PRESTO_BUILDCONSENSUS_EXTRACT.out.logs
     } else {
         // Consider both primers frequency when building consensus
