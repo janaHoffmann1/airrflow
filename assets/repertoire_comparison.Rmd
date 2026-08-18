@@ -84,28 +84,23 @@ tryCatch( {
     lastcol = which(colnames(tab_seqs) == "Representative_2")
     plot_table$steps <- factor(plot_table$steps, levels=colnames(tab_seqs)[firstcol:lastcol])
 
+    y_min <- floor(scales::pseudo_log_trans(sigma=1,base=10)$transform(min(plot_table$count)))
+    y_max <- max(ceiling(max(log10(plot_table$count))),y_min+2)
     seqs_plot <- ggplot(data=plot_table,
                         aes(x=steps, y=count, group=sample_id)) +
-                  geom_line(aes(colour=sample_id)) +
-                  geom_point(aes(colour=sample_id)) +
-                  scale_y_continuous(
-                    trans=scales::pseudo_log_trans(sigma=1, base=10)
-                    ) +
-                  xlab("") + ylab("Sequence count") +
-                  ggtitle("Number of sequences after each of the sequence assembly steps") +
-                  theme(axis.text.x= element_text(angle = 45))
-    y_trans <- scales::pseudo_log_trans(sigma=1, base=10)
-    y_breaks <- scales::trans_breaks(y_trans$transform, y_trans$inverse)(range(plot_table$count, na.rm=TRUE))
-    y_breaks <- y_breaks[y_breaks >= min(plot_table$count, na.rm=TRUE) & y_breaks <= max(plot_table$count, na.rm=TRUE)]
-    p <- ggplotly(seqs_plot) %>%
-      layout(yaxis = list(
-        tickmode = "array",
-        tickvals = y_trans$transform(y_breaks),
-        ticktext = scales::label_number(big.mark = "")(y_breaks)
-      ))
-  p
+                    geom_line(aes(colour=sample_id)) +
+                    geom_point(aes(colour=sample_id)) +
+                    scale_y_continuous(
+                        trans=scales::pseudo_log_trans(sigma=1,base=10),
+                        breaks=10^seq(y_min, y_max,by=1),
+                        limits=c(min(10^y_min,min(plot_table$count)),10^y_max)
+                        ) +
+                    xlab("") + ylab("Sequence count") +
+                    ggtitle("Number of sequences after each of the sequence assembly steps") +
+                    theme(axis.text.x= element_text(angle = 45))
 
-
+    p <- ggplotly(seqs_plot)
+    p
   },
   error=function(e){message("No sequence numbers are available if starting with assembled reads.")}
 )
@@ -166,27 +161,23 @@ tab_seqs_assembled$output_size <- as.numeric(tab_seqs_assembled$output_size)
 tab_seqs_assembled <- tab_seqs_assembled %>%
   filter(!is.na(output_size))
 
+y_min <- floor(scales::pseudo_log_trans(sigma=1,base=10)$transform(min(tab_seqs_assembled$output_size)))
+y_max <- max(ceiling(max(log10(tab_seqs_assembled$output_size))),y_min+2)
 seqs_plot_assembled <- ggplot(data=tab_seqs_assembled,
                     aes(x=task, y=output_size, group=sample_id)) +
               geom_line(aes(colour=sample_id)) +
               geom_point(aes(colour=sample_id)) +
               scale_y_continuous(
-                    trans=scales::pseudo_log_trans(sigma=1, base=10)
-                    ) +
+                    trans=scales::pseudo_log_trans(sigma=1,base=10),
+                    breaks=10^seq(y_min, y_max,by=1),
+                    limits=c(min(10^y_min,min(tab_seqs_assembled$output_size)),10^y_max)
+              ) +
               xlab("") + ylab("Sequence count") +
               ggtitle("Number of sequences after each of the downstream steps") +
               theme(axis.text.x = element_text(angle = 45)
               )
-y_trans <- scales::pseudo_log_trans(sigma=1, base=10)
-y_breaks <- scales::trans_breaks(y_trans$transform, y_trans$inverse)(range(tab_seqs_assembled$output_size, na.rm=TRUE))
-y_breaks <- y_breaks[y_breaks >= min(tab_seqs_assembled$output_size, na.rm=TRUE) & y_breaks <= max(tab_seqs_assembled$output_size, na.rm=TRUE)]
 
-p <- ggplotly(seqs_plot_assembled) %>%
-  layout(yaxis = list(
-    tickmode = "array",
-    tickvals = y_trans$transform(y_breaks),
-    ticktext = scales::label_number(big.mark = "")(y_breaks)
-  ))
+p <- ggplotly(seqs_plot_assembled)
 p
 ```
 
