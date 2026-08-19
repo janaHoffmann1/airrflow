@@ -14,6 +14,8 @@ process GET_READS_PER_UMI {
 
     output:
     path("reads_per_UMI.csv"), emit: readUMI
+    tuple val("${task.process}"), val('python'), eval('python --version 2>&1 | grep -o "[0-9\\. ]\\+"'), emit: versions_python, topic: versions
+    tuple val("${task.process}"), val('pandas'), eval('python -c "import pkg_resources; print(pkg_resources.get_distribution(\'pandas\').version)"'), emit: versions_pandas, topic: versions
 
     script:
     if (library_generation_method == 'trust4') {

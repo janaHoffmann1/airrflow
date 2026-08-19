@@ -512,7 +512,6 @@ workflow PRESTO_UMI {
             PRESTO_POSTCONSENSUS_PAIRSEQ_UMI.out.reads
         )
         ch_assemblepairs_reads = PRESTO_ASSEMBLEPAIRS_UMI.out.reads
-        ch_readumi = PRESTO_BUILDCONSENSUS_UMI.out.log_tab
         ch_assemblepairs_logs = PRESTO_ASSEMBLEPAIRS_UMI.out.logs
     }
 
