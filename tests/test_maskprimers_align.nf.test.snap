@@ -1,7 +1,7 @@
 {
     "-profile test_maskprimers_align": {
         "content": [
-            168,
+            169,
             {
                 "ADD_META_TO_TAB": {
                     "R": "4.5.3",
@@ -54,6 +54,10 @@
                 },
                 "FIND_CLONAL_THRESHOLD": {
                     "enchantr": "0.1.25"
+                },
+                "GET_READS_PER_UMI": {
+                    "pandas": "1.1.5",
+                    "python": "3.9.1"
                 },
                 "GUNZIP_UMI": {
                     "gunzip": "1.10"
