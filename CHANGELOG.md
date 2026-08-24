@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 5.1.1 dev [Unreleased]
 
-### `Fixed`
+### `Added`
 
 - [#492](https://github.com/nf-core/airrflow/pull/492) Add sequencing depth plot.
 

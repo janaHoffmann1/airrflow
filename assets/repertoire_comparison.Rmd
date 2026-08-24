@@ -276,9 +276,6 @@ ggsave(filename = paste0(vfamily_dir, "/V_gene_distribution_by_sequence_patient.
 write.table(family, file = paste0(vfamily_dir, "/V_gene_distribution_by_sequence_data.tsv"), sep = "\t", quote = F, row.names = F)
 ```
 
-
-
-
 # Citations
 
 If you use nf-core/airrflow for your analysis, please cite our paper:
