@@ -55,6 +55,10 @@
                 "FIND_CLONAL_THRESHOLD": {
                     "enchantr": "0.1.25"
                 },
+                "GET_READS_PER_UMI": {
+                    "pandas": "1.1.5",
+                    "python": " 3.9.1"
+                },
                 "GUNZIP_UMI": {
                     "gunzip": "1.10"
                 },

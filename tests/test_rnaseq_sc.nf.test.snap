@@ -56,6 +56,10 @@
                     "optparse": "1.8.2",
                     "stringi": "1.8.7"
                 },
+                "GET_READS_PER_UMI": {
+                    "pandas": "1.1.5",
+                    "python": " 3.9.1"
+                },
                 "PREPARE_TRUST4_REFERENCE": {
                     "cat": "8.30"
                 },

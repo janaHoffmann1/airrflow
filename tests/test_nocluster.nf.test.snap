@@ -54,7 +54,7 @@
                 },
                 "GET_READS_PER_UMI": {
                     "pandas": "1.1.5",
-                    "python": "3.9.1"
+                    "python": " 3.9.1"
                 },
                 "GUNZIP_UMI": {
                     "gunzip": "1.10"
