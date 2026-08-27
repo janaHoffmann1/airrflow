@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### `Fixed`
 
-- Allow passing boolean arguments to Rscript execution from config files.
+- [#494](https://github.com/nf-core/airrflow/pull/494) Allow passing boolean arguments to Rscript execution from config files.
 
 ## 5.1.0 - Ventus
 
