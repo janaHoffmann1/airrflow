@@ -178,10 +178,6 @@ The full table can be found under [Table_sequences_assembled](repertoire_compari
 ```{r seq_assembled, echo=FALSE, warning=FALSE, results='asis'}
 tab_seqs_assembled <- read.table("./Table_sequences_assembled.tsv", header=TRUE, sep="\t", check.names = FALSE)
 
-# Add subject_id
-sample_subject_map <- read.table("./samplesheet.valid.tsv", header=TRUE, sep="\t", check.names=FALSE)[c("sample_id","subject_id")]
-tab_seqs_assembled <- dplyr::left_join(tab_seqs_assembled, sample_subject_map, by="sample_id")
-
 # Splitting on last underscore for sample_id and if there is no underscore split on last dot
 if (is.null(tab_seqs_assembled$sample_id)) {
   tab_seqs_assembled$sample_id <- sapply(tab_seqs_assembled$input, function(x) {
@@ -194,6 +190,10 @@ if (is.null(tab_seqs_assembled$sample_id)) {
     }
   })
 }
+
+# Add subject_id
+sample_subject_map <- read.table("./samplesheet.valid.tsv", header=TRUE, sep="\t", check.names=FALSE)[c("sample_id","subject_id")]
+tab_seqs_assembled <- dplyr::left_join(tab_seqs_assembled, sample_subject_map, by="sample_id")
 
 dat <- tab_seqs_assembled %>%
         filter( !grepl("-fail.tsv", output) ) %>%
