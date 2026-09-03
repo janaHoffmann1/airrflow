@@ -83,11 +83,7 @@ subject_alpha_gradient <- function(df) {
   for (s in subjects) {
     rows <- subject_samples[subject_samples$subject_id == s, ]
     n <- nrow(rows)
-    if (n == 1) {
-      shades <- base_hues[[s]]
-    } else {
-      shades <- scales::seq_gradient_pal(scales::alpha(base_hues[[s]], max(1/n,0.3)), base_hues[[s]])(seq(0, 1, length.out = n))
-    }
+    shades <- scales::seq_gradient_pal(scales::alpha(base_hues[[s]], max(1/n,0.3)), base_hues[[s]])(seq(0, 1, length.out = n))
     palette[rows$colour_label] <- shades
   }
 
