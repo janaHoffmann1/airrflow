@@ -71,7 +71,7 @@ The table below shows the metadata provided in the input sample sheet for this r
 
 ```{r sample_metadata, echo=FALSE, warning=FALSE}
 samplesheet <- read.table("./samplesheet.valid.tsv", header = TRUE, sep = "\t", check.names = FALSE)
-DT::datatable(samplesheet, rownames = FALSE, options = list(scrollX = TRUE, scrollY = "400px", paging = FALSE))
+DT::datatable(samplesheet, rownames = FALSE, options = list(scrollX = TRUE, scrollY = "400px", paging = FALSE, scrollCollapse = TRUE))
 ```
 
 # Number of sequences
