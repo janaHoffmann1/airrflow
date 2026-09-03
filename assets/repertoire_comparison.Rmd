@@ -86,7 +86,7 @@ subject_alpha_gradient <- function(df) {
     if (n == 1) {
       shades <- base_hues[[s]]
     } else {
-      shades <- scales::seq_gradient_pal(scales::alpha(base_hues[[s]], 0.3), base_hues[[s]])(seq(0, 1, length.out = n))
+      shades <- scales::seq_gradient_pal(scales::alpha(base_hues[[s]], max(1/n,0.3)), base_hues[[s]])(seq(0, 1, length.out = n))
     }
     palette[rows$colour_label] <- shades
   }
@@ -114,6 +114,8 @@ tryCatch( {
     firstcol = which(colnames(tab_seqs) == "Sequences")
     lastcol = which(colnames(tab_seqs) == "Representative_2")
     plot_table$steps <- factor(plot_table$steps, levels=colnames(tab_seqs)[firstcol:lastcol])
+    y_min <- floor(scales::pseudo_log_trans(sigma=1,base=10)$transform(min(plot_table$count)))
+    y_max <- max(ceiling(max(log10(plot_table$count))),y_min+2)
   },
   error=function(e){
     seq_numbers_ok <<- FALSE
@@ -130,7 +132,11 @@ if (seq_numbers_ok) {
                       aes(x=steps, y=count, group=sample_id)) +
                 geom_line(aes(colour=sample_id)) +
                 geom_point(aes(colour=sample_id)) +
-                scale_y_log10() +
+                scale_y_continuous(
+                    trans=scales::pseudo_log_trans(sigma=1,base=10),
+                    breaks=10^seq(y_min, y_max,by=1),
+                    limits=c(min(10^y_min,min(plot_table$count)),10^y_max)
+                    ) +
                 xlab("") + ylab("Sequence count") +
                 ggtitle("Number of sequences after each of the sequence assembly steps") +
                 theme(axis.text.x= element_text(angle = 45))
@@ -152,7 +158,11 @@ if (seq_numbers_ok) {
                 geom_line(aes(colour=colour_label)) +
                 geom_point(aes(colour=colour_label)) +
                 scale_colour_manual(values=subj_grad$palette, breaks=subj_grad$breaks, name="Subject ID (Sample ID)") +
-                scale_y_log10() +
+                scale_y_continuous(
+                    trans=scales::pseudo_log_trans(sigma=1,base=10),
+                    breaks=10^seq(y_min, y_max,by=1),
+                    limits=c(min(10^y_min,min(plot_table$count)),10^y_max)
+                    ) +
                 xlab("") + ylab("Sequence count") +
                 ggtitle("Number of sequences after each of the sequence assembly steps") +
                 theme(axis.text.x= element_text(angle = 45))
@@ -217,7 +227,10 @@ tab_seqs_assembled$task <- factor(tab_seqs_assembled$task, levels=c("AssignGenes
 tab_seqs_assembled$output_size <- as.numeric(tab_seqs_assembled$output_size)
 # Remove rows with NA or zero output_size
 tab_seqs_assembled <- tab_seqs_assembled %>%
-  filter(!is.na(output_size) & output_size > 0)
+  filter(!is.na(output_size))
+
+y_min <- floor(scales::pseudo_log_trans(sigma=1,base=10)$transform(min(tab_seqs_assembled$output_size)))
+y_max <- max(ceiling(max(log10(tab_seqs_assembled$output_size))),y_min+2)
 ```
 
 ### Sample ID
@@ -228,7 +241,11 @@ seqs_plot_assembled_sample <- ggplot(data=tab_seqs_assembled,
                     aes(x=task, y=output_size, group=sample_id)) +
               geom_line(aes(colour=sample_id)) +
               geom_point(aes(colour=sample_id)) +
-              scale_y_log10() +
+              scale_y_continuous(
+                    trans=scales::pseudo_log_trans(sigma=1,base=10),
+                    breaks=10^seq(y_min, y_max,by=1),
+                    limits=c(min(10^y_min,min(tab_seqs_assembled$output_size)),10^y_max)
+              ) +
               xlab("") + ylab("Sequence count") +
               ggtitle("Number of sequences after each of the downstream steps") +
               theme(axis.text.x = element_text(angle = 45)
@@ -248,7 +265,11 @@ seqs_plot_assembled_subject <- ggplot(data=subj_grad_assembled$data,
               geom_line(aes(colour=colour_label)) +
               geom_point(aes(colour=colour_label)) +
               scale_colour_manual(values=subj_grad_assembled$palette, breaks=subj_grad_assembled$breaks, name="Subject ID (Sample ID)") +
-              scale_y_log10() +
+              scale_y_continuous(
+                    trans=scales::pseudo_log_trans(sigma=1,base=10),
+                    breaks=10^seq(y_min, y_max,by=1),
+                    limits=c(min(10^y_min,min(tab_seqs_assembled$output_size)),10^y_max)
+              ) +
               xlab("") + ylab("Sequence count") +
               ggtitle("Number of sequences after each of the downstream steps") +
               theme(axis.text.x = element_text(angle = 45)
