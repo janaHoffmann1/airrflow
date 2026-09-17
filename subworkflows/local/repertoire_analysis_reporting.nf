@@ -1,5 +1,4 @@
 include { PARSE_LOGS } from '../../modules/local/parse_logs'
-include { REPORT_FILE_SIZE } from '../../modules/local/enchantr/report_file_size'
 include { ASSEMBLED_LOGS } from '../../modules/local/log_assembled'
 include { AIRRFLOW_REPORT  } from '../../modules/local/airrflow_report/airrflow_report'
 
@@ -67,15 +66,8 @@ workflow REPERTOIRE_ANALYSIS_REPORTING {
                         .map{ it -> it.getName().toString() }
                         .collectFile(name: 'all_logs_tabs.txt', newLine: true)
 
-    REPORT_FILE_SIZE(
-        ch_logs.collect().ifEmpty([]),
-        ch_metadata,
-        ch_logs_tabs
-    )
-
     ASSEMBLED_LOGS(
         ch_logs.collect().ifEmpty([]),
-        REPORT_FILE_SIZE.out.table.collect().ifEmpty([]),
         ch_contamination.collect().ifEmpty([])
     )
 
